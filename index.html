@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask Jane - Your Career Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #0073e6;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #0073e6;
+        }
+        footer {
+            background-color: #0073e6;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .contact {
+            margin-top: 20px;
+        }
+        .contact a {
+            color: white;
+            text-decoration: none;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Ask Jane</h1>
+        <p>Your Personal Career Guide</p>
+    </header>
+    <main>
+        <section>
+            <h2>How Jane Can Help</h2>
+            <p>Jane is an AI-powered career advisor designed to help you navigate the complex world of professional development. Whether you're just starting out in your career or looking to make a change, Jane offers personalized advice, job search tips, resume building guidance, and interview preparation support. She’s here to provide you with the tools and knowledge you need to succeed.</p>
+        </section>
+        <section>
+            <h2>Why Jane Was Created</h2>
+            <p>Jane was created to address the unique career challenges faced by GenZ and GenAlpha. In today's fast-paced, ever-changing job market, it can be difficult to find reliable, up-to-date career advice. Jane uses the latest AI technology to provide relevant and actionable insights tailored to your individual needs. She’s here to bridge the gap between traditional career counseling and the digital world.</p>
+        </section>
+        <section>
+            <h2>About the Creator</h2>
+            <p>Jane was created by K. Pearson, a dedicated professional with a passion for helping the next generation succeed. With extensive experience in human resources and a deep understanding of the challenges faced by today's job seekers, K. Pearson designed Jane to be a reliable, trustworthy career advisor. Connect with K. Pearson on <a href="https://www.linkedin.com/in/kpearson">LinkedIn</a> to learn more.</p>
+        </section>
+        <section>
+            <h2>Ask Jane a Question</h2>
+            <form id="askJaneForm">
+                <textarea id="question" placeholder="Enter your question here..." required></textarea>
+                <button type="submit">Ask Jane</button>
+            </form>
+            <div id="response" style="margin-top: 20px;"></div>
+        </section>
+    </main>
+    <footer>
+        <p>Contact: <a href="https://www.linkedin.com/in/kpearson">K. Pearson on LinkedIn</a></p>
+    </footer>
+    <script>
+        document.getElementById('askJaneForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const question = document.getElementById('question').value;
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = 'Asking Jane...';
+            
+            const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_API_KEY_HERE'
+                },
+                body: JSON.stringify({
+                    prompt: question,
+                    max_tokens: 150
+                })
+            });
+            
+            const data = await response.json();
+            responseDiv.innerHTML = data.choices[0].text;
+        });
+    </script>
+</body>
+</html>
